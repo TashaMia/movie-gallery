@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { fetchFilm } from "./ActionCreator";
 import { TFilm } from "../../../../entities/film-card-entities/models/types/TFilm";
+import { addFilm } from "./ActionCreator";
 
 type TFilmSlice = {
   film: TFilm;
+  poster: string;
   isLoading: boolean;
   error: string;
 };
@@ -14,7 +15,6 @@ const initialState: TFilmSlice = {
     id: null,
     Title: "",
     Year: "",
-
     Runtime: "",
     Genre: "",
     Director: "",
@@ -27,28 +27,34 @@ const initialState: TFilmSlice = {
     imdbRating: "",
     Grade: null,
   },
+  poster: "",
   isLoading: false,
   error: "",
 };
 
-export const filmSlice = createSlice({
-  name: "film",
+export const addFilmSlice = createSlice({
+  name: "addFilm",
   initialState,
-  reducers: {},
+  reducers: {
+    getPoster(state, action: PayloadAction<string>) {
+      state.poster = action.payload;
+    },
+  },
   extraReducers: {
-    [fetchFilm.fulfilled.type]: (state, action: PayloadAction<TFilm>) => {
+    [addFilm.fulfilled.type]: (state, action: PayloadAction<TFilm>) => {
       state.isLoading = false;
       state.error = "";
       state.film = action.payload;
     },
-    [fetchFilm.pending.type]: (state, action: PayloadAction<TFilm>) => {
+    [addFilm.pending.type]: (state, action: PayloadAction<TFilm>) => {
       state.isLoading = true;
     },
-    [fetchFilm.rejected.type]: (state, action: PayloadAction<string>) => {
+    [addFilm.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
   },
 });
+export const { getPoster } = addFilmSlice.actions;
 
-export default filmSlice.reducer;
+export default addFilmSlice.reducer;

@@ -1,33 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { supabase } from "../../../app/database/supabase";
+import { TFilm } from "../../../entities/film-card-entities/models/types/TFilm";
 
 export const fetchFilms = createAsyncThunk(
   "filmList/fetchAll",
-  async ({
-    filterName,
-    filter,
-  }: {
-    filterName: string | null;
-    filter: number | null;
-  }) => {
+  async (search: string | null) => {
     let { data } = await supabase.from("films").select("*");
-    if (filterName == "rating" && filter) {
+    if (search) {
       let { data } = await supabase
         .from("films")
         .select("*")
-        .gt("imdbRating", `${filter}`)
-        .lt("imdbRating", `${filter && filter + 1}`);
+        .textSearch("Title", search);
+      return data;
+    } else {
+      let { data } = await supabase.from("films").select("*");
       return data;
     }
-    if (filterName == "runtime" && filter) {
-      let { data } = await supabase
-        .from("films")
-        .select("*")
-        .eq("Runtime", `${filter}`);
-      return data;
-    }
-    const films = await data;
-
-    return films;
   }
 );

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { fetchFilm } from "./ActionCreator";
 import { TFilm } from "../../../../entities/film-card-entities/models/types/TFilm";
+import { gradeFilms } from "./ActionCreator";
 
 type TFilmSlice = {
   film: TFilm;
@@ -31,24 +31,24 @@ const initialState: TFilmSlice = {
   error: "",
 };
 
-export const filmSlice = createSlice({
-  name: "film",
+export const filmGradeSlice = createSlice({
+  name: "filmGrade",
   initialState,
   reducers: {},
   extraReducers: {
-    [fetchFilm.fulfilled.type]: (state, action: PayloadAction<TFilm>) => {
+    [gradeFilms.fulfilled.type]: (state, action: PayloadAction<TFilm>) => {
       state.isLoading = false;
       state.error = "";
       state.film = action.payload;
     },
-    [fetchFilm.pending.type]: (state, action: PayloadAction<TFilm>) => {
+    [gradeFilms.pending.type]: (state, action: PayloadAction<TFilm>) => {
       state.isLoading = true;
     },
-    [fetchFilm.rejected.type]: (state, action: PayloadAction<string>) => {
+    [gradeFilms.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
   },
 });
 
-export default filmSlice.reducer;
+export default filmGradeSlice.reducer;

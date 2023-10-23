@@ -19,15 +19,14 @@ export default function RadioGroup({
 }) {
   const dispatch = useAppDispatch();
   return (
-    <div className="border gap-2 border-slate-200 py-2 flex flex-col w-48 justify-center items-center rounded-md">
-      <h3 className="font-mono text-xs">{name}</h3>
-      <div className="flex flex-col gap-2">
+    <div className=" gap-2  flex flex-col w-44 justify-center items-start p-2 bg-white rounded-md ">
+      <div className="flex flex-col justify-start  gap-4">
         {buttons.map((button) => (
           <button
-            className={`w-40 h-8 flex  justify-center text-xs font-mono items-center  bg-slate-200 rounded-sm ${
+            className={`w-40 h-8 flex  justify-center text-xs font-mono items-center  rounded-sm ${
               currentId == button.id
-                ? " bg-orange-500 bg-gradient-to-br from-amber-400/40 to-orange-500   text-white"
-                : ""
+                ? "bg-orange-500  hover:bg-orange-600  text-white"
+                : "bg-slate-200 hover:bg-slate-300/70 "
             }`}
             onClick={() => {
               onChange(button.id);

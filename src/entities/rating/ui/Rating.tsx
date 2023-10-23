@@ -1,16 +1,14 @@
 import { Star } from "@phosphor-icons/react";
 import { useState } from "react";
-import { useAppDispatch } from "../../../app/global-store/hooks/reduxTypes";
-import { getRating } from "../../../pages/films/redusers/FilmListSlice";
 
-export default function Rating() {
-  const [rating, setRating] = useState<number>(0);
+export default function Rating({ rating, onChange }: any) {
+  // const [rating, setRating] = useState<number>(0);
   const [hover, setHover] = useState<number>(0);
   console.log(rating);
-  const dispatch = useAppDispatch();
+
   return (
-    <div className="flex gap-2">
-      {[...Array(10)].map((star, index) => {
+    <div className="flex gap-2 ">
+      {[...Array(10)].map((_star, index) => {
         const currentRating = index + 1;
         return (
           <label>
@@ -18,9 +16,9 @@ export default function Rating() {
               type="radio"
               name="rating"
               value={currentRating}
-              onClick={() => {
-                setRating(currentRating);
-                dispatch(getRating(currentRating));
+              onClick={(e) => {
+                e.stopPropagation();
+                onChange(currentRating);
               }}
               className="hidden"
             ></input>

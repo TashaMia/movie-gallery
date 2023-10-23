@@ -1,5 +1,5 @@
 export type TFilm = {
-  id: number | null;
+  id?: number | null;
   Title: string;
   Year: string;
   Runtime: string;
@@ -12,4 +12,5 @@ export type TFilm = {
   Country: string;
   Poster: string;
   imdbRating: string;
+  Grade: null | number;
 };
